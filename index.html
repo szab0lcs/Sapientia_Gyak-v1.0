@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Students API</title>
+    <link rel="stylesheet" href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css'>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <style type="text/css">
+	*{padding:0;margin:0;border:0;}
+        body {
+            font-family: 'Open Sans';
+            padding-bottom: 50px;
+            background-image: url('https://previews.123rf.com/images/nexusplexus/nexusplexus1308/nexusplexus130805033/21495414-hand-drawn-business-ideas-sketch-against-white-background.jpg');
+        }
+        
+        .card {
+            background: #FFF;
+            margin-bottom: 1em;
+            margin-top: 1em;
+            padding: 15px;
+            border-radius: 4px;
+            box-shadow: 0px 0px 3px #CCC;
+			
+        }
+        
+        .card span {
+            margin-left: 0.5em;
+        }
+        
+        .card .details {
+            margin-top: 1.6em;
+        }
+        
+        .card .img {
+            width: 90px;
+            border: 3px solid #CCC;
+            border-radius: 100%;
+			
+        }
+		.container {
+			background: rgba(0, 0, 0, 0.5);
+			box-shadow: 5px 5px 10px 1px black;
+			min-height: 800px;
+			padding-top: 20px;
+			margin-top: 80px;
+		}
+		.white-font-color {
+		color : white;
+		}
+		.new-btn-style {
+			background: url("plus.png") no-repeat;
+			background-size: contain;
+			width: 32px;
+			height: 32px;
+			border: 0px;
+			margin-right: 5px;
+		}
+		.btn-csoport {
+			float: right;
+			display: block;
+		}
+		.btn-details {
+			background: url("more.png") no-repeat;
+
+		}
+		.btn-edit {
+			background: url("edit.png") no-repeat;
+
+		}
+		.btn-delete {
+			background: url("delete.png") no-repeat;
+;
+		}
+		.right-btns {
+			background-size: contain;
+			width: 32px;
+			height: 32px;
+			border: 0px;
+			margin-right: 5px;
+		}
+		#header {
+			position: fixed;
+			background-color: white;
+			z-index: 1000;
+			width: 100%;
+			text-align: center;
+			padding: 20px;
+			margin-top: -80px;
+			box-shadow: 1px 0px 25px 0px black;
+		}
+		#header a {
+			color: black;
+			font-size: 140%;
+			font-weight: bold;
+		}
+    </style>
+
+	<div id="header">
+		<a class="white-font-color">Spring Rest API - Students project</a>
+	</div>
+    <div class="container">
+        <div class="col-md-12">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="row">
+ 
+					<button class="btn-new pull-right new-btn-style"></button>
+                </div>
+               <!--<div class="row">
+                    <form class="form-inline form-search">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input type="text" class="form-control input-search" placeholder="Search for...">
+                                <span class="input-group-btn">
+									<button class="btn btn-default btn-search" type="submit">Search</button>
+								</span>
+                            </div>
+                        </div>
+                    </form>
+                </div>-->
+                <div class="row">
+                    <div id="list">
+                        <p>Loading....</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+	
+	<div class="modal fade" id="modal-new" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                    <h4 class="modal-title">New</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-new-student">
+					  <div class="form-group">
+						<label for="firstName">First Name</label>
+						<input type="text" class="form-control" id="firstName" name="firstName" placeholder="First name...">
+					  </div>
+					  <div class="form-group">
+						<label for="lastName">Last Name</label>
+						<input type="text" class="form-control" id="lastName" name="lastName" placeholder="Last name...">
+					  </div>
+					  					  <div class="form-group">
+						<label for="department">Department</label>
+						<input type="text" class="form-control" id="department" name="department" placeholder="Department...">
+					  </div>
+					  					  <div class="form-group">
+						<label for="year">Year</label>
+						<input type="text" class="form-control" id="year" name="year" placeholder="Year...">
+					  </div>
+						<div class="checkbox">
+							<label>
+							  <input type="checkbox" name="status"> Status
+							</label>
+						  </div>
+						<button type="submit" class="btn btn-default">Submit</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					</form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-details" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                    <h4 class="modal-title">Details</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Loading....</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+	
+	 <div class="modal fade" id="modal-edit" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                    <h4 class="modal-title">Edit</h4>
+                </div>
+                <div class="modal-body">
+					<form class="form-edit-student">
+					  <div class="form-group">
+						<label>First Name</label>
+						<input type="text" class="form-control" name="firstName" placeholder="Email">
+					  </div>
+					  <div class="form-group">
+						<label">Last Name</label>
+						<input type="text" class="form-control" name="lastName" placeholder="Password">
+					  </div>
+					  					  <div class="form-group">
+						<label>Department</label>
+						<input type="text" class="form-control"name="department" placeholder="Password">
+					  </div>
+					  					  <div class="form-group">
+						<label>Year</label>
+						<input type="text" class="form-control" name="year" placeholder="Password">
+					  </div>
+						<div class="checkbox">
+							<label>
+							  <input type="checkbox" name="status"> Status
+							</label>
+						  </div>
+						<button type="submit" class="btn btn-default">Submit</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					</form>
+                </div>
+            </div>
+        </div>
+    </div>
+	
+	   <div class="modal fade" id="modal-delete" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                    <h4 class="modal-title">Delete</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete the student?</p>
+                </div>
+                <div class="modal-footer">
+					<button type="button" class="btn btn-default btn-delete-submit">OK</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+	$(document).ready(() => {
+    const API_BASE = 'http://localhost:8080/api';
+    const APP = {
+        init: () => {
+            APP.getStudents();
+            APP.addEvents();
+        },
+        addEvents: () => {
+            /*$('.form-search').on('submit', (event) => {
+            event.preventDefault();
+            const value = $('.input-search').val();
+            APP.getPeople({
+            search: value
+            });
+            }) */
+            $('body').on('click', '.btn-new', (event) => {
+                $('#modal-new').modal('show');
+            });
+            $('body').on('click', '.card .btn-details', (event) => {
+                const id = $(event.currentTarget).parents('.card').attr('data-id');
+                $('#modal-details').modal('show');
+                APP.getStudent(id);
+            });
+            $('body').on('click', '.card .btn-edit', (event) => {
+                const id = $(event.currentTarget).parents('.card').attr('data-id');
+                $('#modal-edit').modal('show');
+                APP.getStudent(id);
+            });
+            $('body').on('click', '.card .btn-delete', (event) => {
+                const id = $(event.currentTarget).parents('.card').attr('data-id');
+                $('#modal-delete').modal('show');
+                $('#modal-delete').attr("data-id", id);
+                APP.getStudent(id);
+            });
+            $('#modal-new .form-new-student').on('submit', (event) => {
+                event.preventDefault();
+                const firstName = $('#modal-new #firstName').val();
+                const lastName = $('#modal-new #lastName').val();
+                const department = $('#modal-new #department').val();
+                const year = $('#modal-new #year').val();
+                const status = $('#modal-new #status').prop("checked") ? 1 : 0;
+                const data = {
+                    firstName,
+                    lastName,
+                    department,
+                    year: parseInt(year, 10),
+                    status
+                };
+                APP.addStudent(data, () => {
+                    $('#modal-new').modal('hide');
+                    APP.getStudents();
+                });
+            });
+            $('#modal-edit .form-edit-student').on('submit', (event) => {
+                event.preventDefault();
+            });
+            $('#modal-delete .btn-delete-submit').on('click', () => {
+                const id = $(event.currentTarget).parents('#modal-delete').attr('data-id');
+                APP.deleteStudent(id, () => {
+                    $('#modal-delete').modal('hide');
+                    APP.getStudents();
+                });
+            });
+
+        },
+        doRequest: (url, method, data, callback) => {
+            /*doRequest: (options = {}, callback) => { 
+            const ajaxOptions = {
+            url: url,
+            type: method,
+            dataType: 'json',
+            success: (response) => {
+            callback(response);
+            },
+            error: (err) => {
+            console.log('error', err);
+            }
+            }
+            if (options.data) {
+            ajaxOptions.data = options.data;
+            }
+
+            $.ajax(ajaxOptions);
+            */
+            $.ajax({
+                url: url,
+                type: method,
+                data: data,
+                dataType: 'json',
+                success: (response) => {
+                    callback(response);
+                },
+                error: (err) => {
+                    console.log('error', err);
+                }
+            });
+        },
+        getStudents: () => {
+            const url = API_BASE + '/students'
+            const $list = $('#list');
+
+            $list.html('<p>Loading...</p>');
+            /*APP.doRequest({
+            url: url,
+            method: 'GET',
+            data: {
+            name: "test"
+            }},
+            function(response) {
+            ....
+            });*/
+            APP.doRequest(url, 'GET', null, function(response) {
+                if (response && response.length) {
+                    let items = '';
+                    response.forEach((item) => {
+                        items +=
+                            '<div class="card" data-id="' + item.id + '">' +
+                            '<div class="row">' +
+                            '<div class="col-md-8">' +
+                            '<p class="details">' +
+                            '<p class="name"><h4><b>Name: </b></h4>' + item.firstName + ' ' + item.lastName + '<p/>' +
+                            '<p class="gender"><h4><b>Department: </b></h4>' + item.department + '<p/>' +
+                            '</p>' +
+                            '<div class="btn-group btn-csoport">' +
+							'<button type="button" class="right-btns btn-details"> </button>' +
+							'<button type="button" class="right-btns btn-edit"></button>' +
+							'<button type="button" class="right-btns btn-delete"></button>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>';
+                    });
+                    $list.html(items);
+                } else {
+                    $list.html('<p>No results found</p>');
+                }
+            });
+        },
+        getStudent: (id) => {
+            const url = API_BASE + '/students/' + id;
+            const $details = $('#modal-details .modal-body');
+            $details.html('<p>Loading...</p>');
+            APP.doRequest(url, 'GET', null, (student) => {
+                if (student) {
+                    const item =
+                        '<dl class="dl-horizontal">' +
+                        '<dt>First Name:</dt>' +
+                        '<dd>' + student.firstName + '</dd>' +
+                        '<dt>Last Name:</dt>' +
+                        '<dd>' + student.lastName + '</dd>' +
+                        '<dt>Department:</dt>' +
+                        '<dd>' + student.department + '</dd>' +
+                        '<dt>Year:</dt>' +
+                        '<dd>' + student.year + '</dd>' +
+                        '<dt>Status:</dt>' +
+                        '<dd>' + student.status + '</dd>' +
+                        '<dt>Created:</dt>' +
+                        '<dd>' + new Date(student.created) + '</dd>' +
+                        '<dt>Updated:</dt>' +
+                        '<dd>' + new Date(student.updated) + '</dd>' +
+                        '</dl>';
+                    $details.html(item);
+                } else {
+                    $details.html('<p>No student found</p>');
+                }
+            });
+        },
+        deleteStudent: (id, callback) => {
+            const url = API_BASE + '/students/' + id;
+            $.ajax({
+                    url: url,
+                    type: 'DELETE',
+                    dataType: 'json'
+                })
+                .always(function() {
+                    callback();
+                });
+        },
+        addStudent: (data, callback) => {
+            const url = API_BASE + '/students';
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: JSON.stringify(data),
+                contentType: "application/json; charset=utf-8",
+                success: (response) => {
+                    callback(response);
+                },
+                error: (err) => {
+                    console.log('error', err);
+                }
+            });
+        }
+    };
+    APP.init();
+});
+    </script>
+
+</body>
+
+</html>
+<? php
+$mysqli = new mysqli("localhost", "test", "test", "sapitest");
+/* check connection */
+if (mysqli_connect_errno()) {
+printf("Connect failed: %s\n", mysqli_connect_error());
+exit();
+}
+if(isset($_POST['submit']))
+{
+$SQL = "INSERT INTO student (firstname,lastname,szak,evfolyam,status) VALUES ('".$_POST["firstname"]."','".$_POST["lastname"]."','".$_POST["department"]."','".$_POST["year"]."',)";
+$result = mysql_query($SQL);
+}
+?>
